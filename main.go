@@ -87,12 +87,19 @@ func handleMessages(roomID string) {
 
 func main() {
 	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file")
+	// }
 
 	port := os.Getenv("PORT")
 	welcome := os.Getenv("WELCOME")
+	if welcome == "" {
+		welcome = "Welcome to GF Chat"
+
+	}
+	if port == "" {
+		port = "3456"
+	}
 
 	log.Println("PORT: ", port)
 	log.Println("WELCOME: ", welcome)
@@ -104,9 +111,6 @@ func main() {
 		w.Write([]byte(welcome))
 	})
 
-	if port == "" {
-		port = "8000" // Default port if not specified
-	}
 	fmt.Println("HTTP server started on :" + port)
 	err = http.ListenAndServe("0.0.0.0:"+port, r)
 	if err != nil {

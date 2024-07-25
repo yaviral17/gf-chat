@@ -48,7 +48,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 		// Read in a new message as JSON and map it to a Message object
 		var msg models.Message
 		err := ws.ReadJSON(&msg)
-		log.Println(msg)
+		// log.Println(msg)
 		if err != nil {
 			if websocket.IsCloseError(err, websocket.CloseNormalClosure, websocket.CloseGoingAway) {
 				log.Println("WebSocket closed:", err)

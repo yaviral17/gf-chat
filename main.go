@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
+	"github.com/joho/godotenv"
 	"github.com/yaviral17/gf-chat/models"
 )
 
@@ -84,13 +86,29 @@ func handleMessages(roomID string) {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	port := os.Getenv("PORT")
+	welcome := os.Getenv("WELCOME")
+
+	log.Println("PORT: ", port)
+	log.Println("WELCOME: ", welcome)
+
 	r := mux.NewRouter()
 
 	r.HandleFunc("/api/chat/{room_id}", handleConnections)
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte(welcome))
+	})
 
-	fmt.Println("HTTP server started on :8000")
-
-	err := http.ListenAndServe(":8000", r)
+	if port == "" {
+		port = "8000" // Default port if not specified
+	}
+	fmt.Println("HTTP server started on :" + port)
+	err = http.ListenAndServe("0.0.0.0:"+port, r)
 	if err != nil {
 		log.Fatal(err)
 	}

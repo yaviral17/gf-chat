@@ -12,14 +12,16 @@ A room based chat backend made for learning working with websockets and intigrat
 > `WELCOME` a welcome message which will be printed when visited at `http://{host_url}/`
 
 #### Get all items
-
-```hosted
+> Already deployed one
+```
   Websocket wss://gf-chat-production.up.railway.app/api/chat/{room_id}
 ```
+or
 
-```on localhostt
-  Websocket wss://localhost:{PORT}/api/chat/{room_id}
-```
+> Running on localhost
+ ```  
+ Websocket wss://localhost:{PORT}/api/chat/{room_id}
+ ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |

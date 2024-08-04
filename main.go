@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	"github.com/joho/godotenv"
+	"github.com/yaviral17/gf-chat/db"
 	"github.com/yaviral17/gf-chat/models"
 )
 
@@ -90,6 +91,11 @@ func main() {
 	// if err != nil {
 	// 	log.Fatalf("Error loading .env file")
 	// }
+	err = db.InitDB()
+	if err != nil {
+		log.Fatalf("Error initializing database: %v", err)
+	}
+	defer db.CloseDB()
 
 	port := os.Getenv("PORT")
 	welcome := os.Getenv("WELCOME")
